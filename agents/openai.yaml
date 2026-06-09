@@ -1,0 +1,15 @@
+interface:
+  display_name: "Image to Figma Design"
+  short_description: "Convert screenshots into Figma-ready specs"
+  default_prompt: "Use $image-to-figma-design to turn this screenshot into a Figma-ready design spec."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "figma"
+      description: "Figma MCP server, when write/create access is available"
+      transport: "streamable_http"
+      url: "https://mcp.figma.com/mcp"
+
+policy:
+  allow_implicit_invocation: true
