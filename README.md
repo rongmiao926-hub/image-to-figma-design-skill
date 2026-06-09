@@ -6,6 +6,9 @@ layer plans.
 
 ## What It Does
 
+- Checks that Figma MCP is connected before attempting direct Figma creation.
+- Guides the user to connect or configure Figma MCP when the required tools are
+  not available.
 - Inspects source images and records canvas size, layout, typography, color,
   spacing, assets, and visible copy.
 - Produces a Figma frame plan with semantic layers, components, tokens, assets,
@@ -20,6 +23,8 @@ layer plans.
 - Figma MCP access if you want direct Figma file creation or editing.
 
 The bundled `agents/openai.yaml` declares the Figma MCP dependency.
+The skill uses `https://mcp.figma.com/mcp` as the Figma MCP endpoint when
+configuration guidance is needed.
 
 ## Install
 

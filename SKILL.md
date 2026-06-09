@@ -11,29 +11,40 @@ Turn a source image into an editable Figma design plan. Prefer semantic Figma la
 
 ## Required Flow
 
-1. **Confirm inputs**
+1. **Check Figma MCP connectivity first**
+   - Before inspecting or converting the image, verify whether Figma MCP tools are actually available in the current environment.
+   - Treat connectivity as confirmed only if callable Figma tools are present, such as `whoami`, `create_new_file`, `use_figma`, `upload_assets`, `get_screenshot`, or equivalent Figma MCP capabilities.
+   - If Figma MCP is connected, run a lightweight account/tool check before creating or editing files.
+   - If Figma MCP is not connected, pause the Figma creation path and help the user configure it:
+     - Explain that direct Figma creation requires Figma MCP access.
+     - Ask the user to connect or enable the Figma MCP server in their Codex/MCP environment.
+     - Use the MCP endpoint from this skill metadata when relevant: `https://mcp.figma.com/mcp`.
+     - After the user connects it, rerun the lightweight account/tool check.
+   - Do not claim a Figma file can be created until this check passes.
+
+2. **Confirm inputs**
    - Identify every source image path, URL, screenshot, or attachment.
    - If the image is missing, ask for it before proceeding.
    - Clarify only high-impact unknowns: target canvas size, desktop/mobile breakpoint, or whether exact pixel parity is required.
 
-2. **Inspect the image**
+3. **Inspect the image**
    - Use visual tools for local images and screenshots.
    - Record canvas dimensions, main regions, grid, spacing rhythm, typography, colors, icons, imagery, elevation, borders, and interaction states visible in the image.
    - Preserve visible copy exactly. Mark unreadable text as `[unreadable]` instead of inventing content.
 
-3. **Choose the build path**
+4. **Choose the build path**
    - If a callable Figma write/create API is available, create frames, layers, components, variables, and assets directly in Figma.
    - If only read-only Figma tools are available, say so and deliver a Figma construction spec plus assets or an optional HTML/CSS visual preview. Do not claim a Figma file was created.
    - Keep the original image as a locked reference layer only when working inside Figma; do not use it as the final design background.
 
-4. **Decompose into editable Figma objects**
+5. **Decompose into editable Figma objects**
    - Root frame: exact size, background, layout grid, safe area, breakpoint behavior.
    - Regions: header, navigation, content, panels, modals, lists, cards, forms, controls, and footer.
    - Components: buttons, inputs, tabs, menus, badges, list rows, cards, icons, empty/loading/error states when visible or naturally implied.
    - Tokens: color, typography, spacing, radius, border, shadow, opacity, and image treatment.
    - Constraints: resizing rules and auto-layout direction, gap, padding, alignment, wrapping, and fixed vs hug/fill sizing.
 
-5. **Verify**
+6. **Verify**
    - Compare the recreated output or spec against the source image.
    - Call out material deviations, inferred values, missing fonts/assets, and any text that could not be read.
    - For exact recreations, make a screenshot of the result and iterate until layout, proportions, and visual hierarchy match.
